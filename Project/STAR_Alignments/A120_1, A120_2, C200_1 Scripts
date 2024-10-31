@@ -1,1 +1,47 @@
+## STAR Alignments Script
+# Acetic Acid Treatment Groups 1 and 2 at 120 minutes, and Control Group 1 at 200 minutes
 
+#!/usr/bin/bash
+
+
+
+# STAR Alignment for Acetic Acid Treatment Group #1 at 120 minutes
+
+
+STAR \
+--genomeDir /projects/micb405/finalprojects2024/group09/reference/indexed_reference \
+--readFilesIn /projects/micb405/finalprojects2024/group09/SRP075510/SRR3567639/SRR3567639_1.fastq.gz /projects/micb405/finalprojects2024/group09/SRP075510/SRR3567639/SRR3567639_2.fastq.gz \
+--readFilesCommand zcat \
+--outSAMtype BAM SortedByCoordinate \
+--quantMode GeneCounts \
+--runThreadN 8 \
+--alignIntronMax 1500
+
+
+
+# STAR Alignment for Acetic Acid Treatment Group #2 at 120 minutes
+
+
+STAR \
+--genomeDir /projects/micb405/finalprojects2024/group09/reference/indexed_reference \
+--readFilesIn /projects/micb405/finalprojects2024/group09/SRP075510/SRR3567657/SRR3567657_1.fastq.gz /projects/micb405/finalprojects2024/group09/SRP075510/SRR3567657/SRR3567657_2.fastq.gz \
+--readFilesCommand zcat \
+--outSAMtype BAM SortedByCoordinate \
+--quantMode GeneCounts \
+--runThreadN 8 \
+--alignIntronMax 1500
+
+
+
+
+# STAR Alignment for Control Group #1 at 200 minutes
+
+
+STAR \
+--genomeDir /projects/micb405/finalprojects2024/group09/reference/indexed_reference \
+--readFilesIn /projects/micb405/finalprojects2024/group09/SRP075510/SRR3567674/SRR3567674_1.fastq.gz /projects/micb405/finalprojects2024/group09/SRP075510/SRR3567674/SRR3567674_2.fastq.gz \
+--readFilesCommand zcat \
+--outSAMtype BAM SortedByCoordinate \
+--quantMode GeneCounts \
+--runThreadN 8 \
+--alignIntronMax 1500
