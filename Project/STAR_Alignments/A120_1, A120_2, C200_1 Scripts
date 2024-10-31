@@ -1,7 +1,7 @@
 ## STAR Alignments Script
 # Acetic Acid Treatment Groups 1 and 2 at 120 minutes, and Control Group 1 at 200 minutes
 
-#!/usr/bin/bash
+#!/bin/bash
 
 
 
