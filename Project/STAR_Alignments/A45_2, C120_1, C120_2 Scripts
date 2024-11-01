@@ -1,1 +1,38 @@
 
+### All fastq files downloaded from ENA Browser using wget -nc
+
+# Acetic Acid 45 min sample #2 - Run #4 read 1 and 2 (SRR3567555) 
+# md5sum R1 = (7506c1a3d789c56ebecd38381962c401), R2 = (a4a837b589ab855a320cd64016840c30)
+
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR356/005/SRR3567555/SRR3567555_1.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR356/005/SRR3567555/SRR3567555_2.fastq.gz
+
+# Control 120 min sample #1 - Run #5 read 1 and 2 (SRR3567637)
+# md5sum R1 = (1f42b914731a7a1edcca2efadf235009), R2 = (4ccda40624950a9c5cbb73e4462657b2) 
+
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR356/007/SRR3567637/SRR3567637_2.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR356/007/SRR3567637/SRR3567637_1.fastq.gz
+
+# Control 120 min sample #2 - Run #6 read 1 and 2 (SRR3567638)
+# md5sum R1 = (27564afedebd5c06cdd3c19b42a5c75d), R2 = (08e94ae6cdb721b840b28bc899ca580e) 
+
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR356/008/SRR3567638/SRR3567638_2.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR356/008/SRR3567638/SRR3567638_1.fastq.gz
+
+# Check md5sum:
+md5sum yourread.fastq.gz
+
+### STAR Alignments ###
+
+#
+STAR \
+    --genomeDir STARIndex \
+    --readFilesIn SRR3567555_1.fastq.gz SRR3567555_2.fastq.gz \
+    --readFilesCommand zcat \
+    --outFileNamePrefix RUN4 \
+    --outSAMtype BAM SortedByCoordinate \
+    --runThreadN 16 \
+    --alignIntronMax 1500
+    --quantMode GeneCounts
+    
+
