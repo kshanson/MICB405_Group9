@@ -1,0 +1,32 @@
+## STAR Alignments Script
+
+#!/bin/bash
+# Star Alignment for control at 45 Minutes (SRR3567551) 
+STAR \
+     --genomeDir reference/indexed_reference/ \
+     --sjdbGTFfile GCF_000146045.2_R64_genomic.gtf \
+     --readFilesIn SRP075510/SRR3567551/SRR3567551_1.fastq SRP075510/SRR3567551/SRR3567551_2.fastq \
+     --outFileNamePrefix alignment/SRR3567551_aligned/ \
+     --outSAMtype BAM SortedByCoordinate \
+     --quantMode GeneCounts \
+     --runThreadN 8
+     
+# Star Alignment for control at 45 Minutes (SRR3567552) 
+STAR \
+     --genomeDir reference/indexed_reference/ \
+     --sjdbGTFfile GCF_000146045.2_R64_genomic.gtf \
+     --readFilesIn SRP075510/SRR3567552/SRR3567552_1.fastq SRP075510/SRR3567552/SRR3567552_2.fastq \
+     --outFileNamePrefix alignment/SRR3567552_aligned/ \
+     --outSAMtype BAM SortedByCoordinate \
+     --quantMode GeneCounts \
+     --runThreadN 8
+     
+# Star Alignment for acetic acid at 45 Minutes (SRR3567554) 
+STAR \
+     --genomeDir reference/indexed_reference/ \
+     --sjdbGTFfile GCF_000146045.2_R64_genomic.gtf \
+     --readFilesIn SRP075510/SRR3567554/SRR3567554_1.fastq SRP075510/SRR3567554/SRR3567554_2.fastq \
+     --outFileNamePrefix alignment/SRR3567554_aligned/ \
+     --outSAMtype BAM SortedByCoordinate \
+     --quantMode GeneCounts \
+     --runThreadN 8
