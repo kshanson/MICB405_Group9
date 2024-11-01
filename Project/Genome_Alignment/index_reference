@@ -1,0 +1,7 @@
+# Indexing of the reference genome
+STAR /
+--runThreadN 8 /
+--runMode genomeGenerate /
+--genomeDir reference/indexed_reference /
+--genomeFastaFiles reference/GCF_000146045.2_R64_genomic.fna /
+--sjdbGTFfile gtf/GCF_000146045.2_R64_genomic.gtf
