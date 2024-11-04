@@ -9,6 +9,7 @@ STAR \
      --outFileNamePrefix alignment/SRR3567551_aligned/ \
      --outSAMtype BAM SortedByCoordinate \
      --quantMode GeneCounts \
+     --alignIntronMax 1500 \
      --runThreadN 8
      
 # Star Alignment for control at 45 Minutes (SRR3567552) 
@@ -19,6 +20,7 @@ STAR \
      --outFileNamePrefix alignment/SRR3567552_aligned/ \
      --outSAMtype BAM SortedByCoordinate \
      --quantMode GeneCounts \
+     --alignIntronMax 1500 \
      --runThreadN 8
      
 # Star Alignment for acetic acid at 45 Minutes (SRR3567554) 
@@ -29,4 +31,5 @@ STAR \
      --outFileNamePrefix alignment/SRR3567554_aligned/ \
      --outSAMtype BAM SortedByCoordinate \
      --quantMode GeneCounts \
+     --alignIntronMax 1500 \
      --runThreadN 8
