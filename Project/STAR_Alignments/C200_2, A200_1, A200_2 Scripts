@@ -1,1 +1,39 @@
+### STAR ###
+
+# control_200_2 aligned
+
+STAR \
+--genomeDir /projects/micb405/finalprojects2024/group09/reference/indexed_reference \
+--readFilesIn /projects/micb405/finalprojects2024/group09/SRP075510/SRR3567676/SRR3567676_1.fastq.gz /projects/micb405/finalprojects2024/group09/SRP075510/SRR3567676/SRR3567676_2.fastq.gz \
+--readFilesCommand zcat \
+--outFileNamePrefix control_200_2 \
+--outSAMtype BAM SortedByCoordinate \
+--quantMode GeneCounts \
+--runThreadN 8 \
+--alignIntronMax 1500 &
+
+# Acetic_200_1 aligned
+
+STAR \
+--genomeDir /projects/micb405/finalprojects2024/group09/reference/indexed_reference \
+--readFilesIn /projects/micb405/finalprojects2024/group09/SRP075510/acetic_200_1/SRR3567677_1.fastq.gz /projects/micb405/finalprojects2024/group09/SRP075510/acetic_200_1/SRR3567677_2.fastq.gz \
+--readFilesCommand zcat \
+--outFileNamePrefix acetic_200_1 \
+--outSAMtype BAM SortedByCoordinate \
+--quantMode GeneCounts \
+--runThreadN 8 \
+--alignIntronMax 1500 &
+
+# Acetic_200_2 aligned
+
+STAR \
+--genomeDir /projects/micb405/finalprojects2024/group09/reference/indexed_reference \
+--readFilesIn /projects/micb405/finalprojects2024/group09/SRP075510/acetic_200_2/SRR3567679_1.fastq.gz /projects/micb405/finalprojects2024/group09/SRP075510/acetic_200_2/SRR3567679_2.fastq.gz \
+--readFilesCommand zcat \
+--outFileNamePrefix acetic_200_2 \
+--outSAMtype BAM SortedByCoordinate \
+--quantMode GeneCounts \
+--runThreadN 8 \
+--alignIntronMax 1500 &
+
 
