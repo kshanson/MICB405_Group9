@@ -210,13 +210,14 @@ order_term_down <- down_GO_filtered_arranged %>%
 down_GO_filtered_arranged %>% 
   ggplot(aes(x= Term, y = GeneRatio, colour = weight01)) +
   geom_col(width = 0.05) +
-  geom_point(size = 3) +
+  geom_point(aes(size= Significant)) +
   coord_flip() +
   scale_x_discrete(limits = order_term_down) + 
   scale_colour_gradient(low = "red", high = "blue") +
   theme_light() +
   labs(x = "GO Term Description", y = "Enrichment Ratio", color = "P-value", size = "Number of Significant Genes") +
-  theme(panel.border = element_rect(color = "black"), panel.grid = element_line(colour = "grey96")) 
+  theme(panel.border = element_rect(color = "black"), panel.grid = element_line(colour = "grey96")) +
+  scale_y_continuous(limits = c(0, 1.1), breaks = seq(0, 1, 0.25), expand = c(0, 0))
 ```
 
 ##### Upregulated Gene GO ######
@@ -250,13 +251,16 @@ order_term_up <- up_GO_filtered_arranged %>%
 up_GO_filtered_arranged %>% 
   ggplot(aes(x= Term, y = GeneRatio, colour = weight01)) +
   geom_col(width = 0.05) +
-  geom_point(size = 3) +
+  geom_point(aes(size= Significant)) +
   coord_flip() +
   scale_x_discrete(limits = order_term_up) + 
   scale_colour_gradient(low = "red", high = "blue") +
     theme_light() +
   labs(x = "GO Term Description", y = "Enrichment Ratio", color = "P-value", size = "Number of Significant Genes") +
-  theme(panel.border = element_rect(color = "black"), panel.grid = element_line(colour = "grey96")) 
+  theme(panel.border = element_rect(color = "black"), panel.grid = element_line(colour = "grey96")) +
+   scale_y_continuous(limits = c(0, 1.1), breaks = seq(0, 1, 0.25), expand = c(0, 0))
+
+
 ```
 
 
