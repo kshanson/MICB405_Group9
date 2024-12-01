@@ -197,20 +197,20 @@ head(res_filtered_final)
 
 ```{r}
 # remove rows that contain tRNA genes
-res_filtered_final_notrna <-  res_filtered_final[-c(732:889), ]
+#res_filtered_final_notrna <-  res_filtered_final[-c(732:889), ]
 
 # re-number the rows
-rownames(res_filtered_final_notrna) <- 1:nrow(res_filtered_final_notrna)
+#rownames(res_filtered_final_notrna) <- 1:nrow(res_filtered_final_notrna)
 
 # view the final filtered data
-view(res_filtered_final_notrna)
+#view(res_filtered_final_notrna)
 ```
 
 ## Top 10 up- and downregulated genes
 Here we could check the gene id's and see whether they match with our hypothesis.
 ```{r}
 # Select the top 10 upregulated genes (highest log2 fold change)
-top50_genes <- res_filtered_final_notrna %>%
+top50_genes <- res_filtered_final %>%
   arrange(desc(log2FoldChange)) %>%
   head(n = 50)
 
@@ -218,11 +218,11 @@ top50_genes <- res_filtered_final_notrna %>%
 top50_genes
 
 # Save top 50 genes as a tab-separated file
-write.table(top50_genes, file = "top50_genes.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
+write.table(top50_genes, file = "top50_genes_trimmed.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
 ```
 ```{r}
 # Select the top 10 downregulated genes (lowest log2 fold change)
-bot50_genes <- res_filtered_final_notrna %>%
+bot50_genes <- res_filtered_final%>%
   arrange(log2FoldChange) %>%
   head(n = 50)
 
@@ -230,7 +230,7 @@ bot50_genes <- res_filtered_final_notrna %>%
 bot50_genes
 
 # Save bop 50 genes as a tab-separated file
-write.table(bot50_genes, file = "bot50_genes.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
+write.table(bot50_genes, file = "bot50_genes_trimmed.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
 
 ```
 ## Volcano plot
@@ -314,6 +314,6 @@ ggplot(labelled_dat2, aes(x = l2fc, fill = up_down)) +
 
 ## Save file as csv
 ```{r}
-write_csv(res_filtered_final, "yeast_results.csv")
+write_csv(res_filtered_final, "yeast_results_trimmed.csv")
 ```
 
