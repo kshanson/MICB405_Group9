@@ -1,0 +1,285 @@
+---
+title: "GO term enrichment analysis"
+author: "ans Carlo von Vegesack"
+date: "2024-11-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Setup for first installation
+Only execute if you re-installed R or never installed BiocManager
+```{r}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("DESeq2")
+BiocManager::install("pheatmap")
+BiocManager::install("topGO")
+```
+
+### Normal start
+Set the working directory as you need it. In my case I set the working directory to a folder called "final_project". Inside this folder is a folder called "count_matrix". "count_matrix" has the ReadsPerGene files. You can see this also in the Load Count Matrix part.
+```{r}
+# Load necessary libraries
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(DESeq2))
+suppressPackageStartupMessages(library(pheatmap))
+suppressPackageStartupMessages(library(RColorBrewer))
+suppressPackageStartupMessages(library(topGO))
+suppressPackageStartupMessages(library(dplyr))
+
+# Set the working directory
+setwd("~/uni/autumn-24/final_project/")
+```
+## Convert the mapping file
+```{r}
+# Load necessary libraries
+library(dplyr)
+
+# Load the GAF file
+gaf_file <- "data/sgd.gaf"  # Adjust the path if needed
+gaf_data <- read.delim(gaf_file, comment.char = "!", header = FALSE, sep = "\t", stringsAsFactors = FALSE)
+
+# Extract relevant columns: 11 = Systematic Name, 5 = GO Term
+gene_to_go <- gaf_data[, c(11, 5)]
+colnames(gene_to_go) <- c("Gene", "GO")
+
+# Extract the first identifier before the pipe
+gene_to_go$Gene <- sapply(strsplit(gene_to_go$Gene, "\\|"), `[`, 1)
+
+
+
+# Ensure there are no extra spaces or invalid characters
+gene_to_go$Gene <- trimws(gene_to_go$Gene)  # Trim whitespace
+gene_to_go$GO <- trimws(gene_to_go$GO)  # Trim whitespace
+
+# Preview the cleaned data
+head(gene_to_go)
+
+cleaned_gene_to_go <- gene_to_go
+# Group by Gene and collapse GO terms
+geneID2GO <- cleaned_gene_to_go %>%
+  group_by(Gene) %>%
+  mutate(GO = paste(unique(GO), collapse = ","), .groups = "drop")
+
+geneID2GO <- geneID2GO %>% distinct(Gene, GO)
+# Save the collapsed file
+write.table(geneID2GO, file = "data/collapsed_geneID2GO.tsv", sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
+
+
+```
+
+## Load Mapping file and create character vector
+```{r}
+geneID2GO <- readMappings("data/collapsed_geneID2GO.tsv")
+
+geneUniverse <- names(geneID2GO)
+```
+
+
+## Load Gene Expression Data
+```{r}
+data <- read_csv("data/yeast_results_200.csv")
+```
+
+## Filter for statistically significant upregulated genes
+```{r}
+up_genes <- data %>% 
+  filter(padj <= 0.05 & log2FoldChange >= 0)
+
+# Filter for statistically signficant downregulated genes
+down_genes <- data %>% 
+  filter(padj <= 0.05 & log2FoldChange <= 0)
+```
+
+## Extract Gne ids
+```{r}
+upregulated_genes <- as.character(up_genes$gene_id)
+downregulated_genes <- as.character(down_genes$gene_id)
+```
+
+## Get binary values depending on if a gene is upregulated or not (or downregulated or not)
+```{r}
+up_gene_list <- factor(as.integer(geneUniverse %in% upregulated_genes))
+down_gene_list <- factor(as.integer(geneUniverse %in% downregulated_genes))
+
+# Set names for the gene list.
+names(up_gene_list) <- geneUniverse
+names(down_gene_list) <- geneUniverse
+```
+
+```{r}
+# Check the length of geneUniverse
+length(geneUniverse)
+
+# Check the number of matches
+sum(geneUniverse %in% upregulated_genes)  # Should be > 0
+sum(geneUniverse %in% downregulated_genes)  # Should be > 0
+
+# Check a preview of gene IDs in each list
+head(geneUniverse)
+head(upregulated_genes)
+head(downregulated_genes)
+
+```
+
+# GO Term Enrichment
+```{r}
+up_GO_data <- new("topGOdata", 
+                  description = "yeast_acidic", 
+                  ontology = "BP", 
+                  allGenes = up_gene_list,
+                  annot = annFUN.gene2GO,
+                  gene2GO = geneID2GO)
+
+# Build the GOdata object in topGO for downregulated
+down_GO_data <- new("topGOdata",
+                    description = "yeast_acidic",
+                    ontology = "BP",
+                    allGenes = down_gene_list,
+                    annot = annFUN.gene2GO,
+                    gene2GO = geneID2GO)
+```
+```{r}
+# Perform stats for upregulated data
+up_result <- runTest(up_GO_data,
+                     algorithm = "weight01",
+                     statistic = "fisher")
+
+# Perform stats for downregulated data
+down_result <- runTest(down_GO_data,
+                       algorithm = "weight01",
+                       statistic = "fisher")
+```
+```{r}
+# Extract a summary of upregulated results
+up_GO <- GenTable(up_GO_data,
+                       weight01 = up_result,
+                       orderBy = "up_result",
+                       ranksOf = "up_result",
+                       topNodes = 50)
+
+# Extract a summary of downregulated results
+down_GO <- GenTable(down_GO_data,
+                         weight01 = down_result,
+                         orderBy = "down_result",
+                         ranksOf = "down_result",
+                         topNodes = 50)
+```
+
+
+# Visualizing TopGO Analyses
+```{r}
+# Filter out any non-significant data and calculate the gene ratio
+down_GO_filtered <- down_GO %>%
+  mutate(GeneRatio = Significant/Annotated, weight01 = as.numeric(weight01)) %>%
+  filter(weight01 <= 0.05) %>%
+  head(n = 20)
+```
+
+```{r}
+down_GO_filtered %>% 
+  ggplot(aes(x = Term, y = GeneRatio)) +
+  geom_col(width = 0.05) + 
+  geom_point(size = 3) +
+  coord_flip() # Flip the axes so the x-axis labels are readable
+```
+```{r}
+# First, let's arrange the data based on the enrichment ratio. 
+down_GO_filtered_arranged <- down_GO_filtered %>% 
+  arrange(GeneRatio) %>%
+  mutate(Term = factor(Term))
+
+# Now let's extract the order of the term column
+order_term <- down_GO_filtered_arranged %>% 
+  pull(Term) # pull() extracts a column as a vector
+```
+
+```{r}
+down_GO_filtered_arranged %>% 
+  ggplot(aes(x= Term, y = GeneRatio, colour = weight01)) +
+  geom_col(width = 0.05) +
+  geom_point(size = 3) +
+  coord_flip() +
+  scale_x_discrete(limits = order_term) + 
+  scale_colour_gradient(low = "red", high = "blue")
+```
+```{r}
+# Filter out any non-significant data and calculate the gene ratio
+up_GO_filtered <- up_GO %>%
+  mutate(GeneRatio = Significant/Annotated, weight01 = as.numeric(weight01)) %>%
+  filter(weight01 <= 0.05) %>%
+  head(n = 20)
+```
+```{r}
+up_GO_filtered %>% 
+  ggplot(aes(x = Term, y = GeneRatio)) +
+  geom_col(width = 0.05) + 
+  geom_point(size = 3) +
+  coord_flip() # Flip the axes so the x-axis labels are readable
+```
+```{r}
+# First, arrange the data based on the enrichment ratio. 
+up_GO_filtered_arranged <- up_GO_filtered %>% 
+  arrange(GeneRatio) %>%
+  mutate(Term = factor(Term))
+
+# extract the order of the term column
+order_term_up <- up_GO_filtered_arranged %>% 
+  pull(Term) # pull() extracts a column as a vector
+```
+
+```{r}
+
+up_GO_filtered_arranged %>% 
+  ggplot(aes(x= Term, y = GeneRatio, colour = weight01)) +
+  geom_col(width = 0.05) +
+  geom_point(aes(size= Significant)) +
+  coord_flip() +
+  scale_x_discrete(limits = order_term_up) + 
+  scale_colour_gradient(low = "red", high = "blue") +
+    theme_light() +
+  labs(x = "GO Term Description", y = "Enrichment Ratio", color = "P-value", size = "Number of Significant Genes") +
+  theme(panel.border = element_rect(color = "black"), panel.grid = element_line(colour = "grey96")) +
+   scale_y_continuous(limits = c(0, 1.1), breaks = seq(0, 1, 0.25), expand = c(0, 0))
+
+
+```
+```{r}
+# Add labels to upregulated and downregulated dataframes
+up_GO <- up_GO %>% 
+  mutate(up_down = "UP")
+
+down_GO <- down_GO %>% 
+  mutate(up_down = "DOWN")
+
+# Make a joined dataframe
+joined_GO_filtered_arranged <- bind_rows(up_GO, down_GO) %>%
+  filter(weight01 <= 0.05) %>%
+  mutate(GeneRatio = Significant/Annotated, weight01 = as.numeric(weight01)) %>%
+  arrange(GeneRatio) %>%
+  mutate(Term = factor(Term)) %>%
+  head(n = 40)
+
+# Extract the column order
+order_term_joined <- joined_GO_filtered_arranged %>% 
+  pull(Term)
+
+joined_GO_filtered_arranged %>% 
+  ggplot(aes(x= Term, y = GeneRatio, color = weight01)) +
+  geom_point(aes(size= Significant)) +
+  coord_flip() +
+  scale_x_discrete(limits = order_term_joined) +
+  scale_color_gradient(low = "red", high = "blue") +
+  theme_light() +
+  labs(x = "GO Term Description", y = "Enrichment Ratio", color = "P-value", size = "Number of Significant Genes") +
+  theme(panel.border = element_rect(color = "black"), 
+        panel.grid = element_line(colour = "grey96"), 
+        strip.background = element_rect(colour = "black")) +
+  scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.2), expand = c(0, 0)) +
+  facet_grid(.~ up_down)
+```
+
