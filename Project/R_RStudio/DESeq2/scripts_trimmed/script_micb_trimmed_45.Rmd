@@ -93,22 +93,36 @@ rownames(sample_metadata) <- sample_metadata$sample
 # Reorder sample_metadata based on the column names of count_matrix
 sample_metadata <- sample_metadata[match(colnames(filtered_count_matrix), rownames(sample_metadata)), ]
 
-## Like in the tutorial
-sample_metadata$condition <- #relevel(factor(sample_metadata$condition), ref = "control")
-
 # Check the levels of the sample_metadata
 sample_metadata$condition <- relevel(factor(sample_metadata$condition), ref = "control")
 
 # Check if meta data is correct
 sample_metadata
 ```
+## subset for 45 min timepoint
+```{r}
+# Subset metadata for time point 45
+sample_metadata_45 <- sample_metadata[sample_metadata$time_point == "45", ]
+
+# Check the subsetted metadata
+print(sample_metadata_45)
+
+# Subset count matrix for time point 45
+count_matrix_45 <- filtered_count_matrix[, colnames(count_matrix) %in% rownames(sample_metadata_45)]
+
+# Check dimensions of the subsetted count matrix
+cat("Subsetted count matrix dimensions:", dim(count_matrix_45), "\n")
+
+```
+
+
 ## Results
 Create matrix with the count matrix and the meta data. We care about both condition and time point.
 ```{r}
 # Create DESeq2 dataset
-dds <- DESeqDataSetFromMatrix(countData = filtered_count_matrix,
-                              colData = sample_metadata,
-                              design = ~ condition + time_point)
+dds <- DESeqDataSetFromMatrix(countData = count_matrix_45,
+                              colData = sample_metadata_45,
+                              design = ~ condition)
 dds$condition <- relevel(dds$condition, ref = "control")
 # Run DESeq2 analysis
 dds <- DESeq(dds)
@@ -155,6 +169,7 @@ Because of the small difference between time points I decided to only care about
 resultsNames(dds)
 
 # Extract the results for our specific comparison
+# Replace "condition_treated_vs_control" with the actual result name if different
 res <- results(dds, name = "condition_acetic_vs_control") %>% as.data.frame()
 
 # View the first few rows to understand the structure of the results
@@ -214,11 +229,11 @@ top50_genes <- res_filtered_final %>%
 top50_genes
 
 # Save top 50 genes as a tab-separated file
-write.table(top50_genes, file = "top50_genes_trimmed.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
+write.table(top50_genes, file = "top50_genes_45.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
 ```
 ```{r}
 # Select the top 10 downregulated genes (lowest log2 fold change)
-bot50_genes <- res_filtered_final%>%
+bot50_genes <- res_filtered_final %>%
   arrange(log2FoldChange) %>%
   head(n = 50)
 
@@ -226,7 +241,7 @@ bot50_genes <- res_filtered_final%>%
 bot50_genes
 
 # Save bop 50 genes as a tab-separated file
-write.table(bot50_genes, file = "bot50_genes_trimmed.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
+write.table(bot50_genes, file = "bot50_genes_45.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
 
 ```
 ## Volcano plot
@@ -310,6 +325,6 @@ ggplot(labelled_dat2, aes(x = l2fc, fill = up_down)) +
 
 ## Save file as csv
 ```{r}
-write_csv(res_filtered_final, "yeast_results_trimmed.csv")
+write_csv(res_filtered_final, "yeast_results_45.csv")
 ```
 

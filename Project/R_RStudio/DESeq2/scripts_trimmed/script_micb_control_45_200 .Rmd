@@ -93,23 +93,40 @@ rownames(sample_metadata) <- sample_metadata$sample
 # Reorder sample_metadata based on the column names of count_matrix
 sample_metadata <- sample_metadata[match(colnames(filtered_count_matrix), rownames(sample_metadata)), ]
 
-## Like in the tutorial
-sample_metadata$condition <- #relevel(factor(sample_metadata$condition), ref = "control")
-
 # Check the levels of the sample_metadata
 sample_metadata$condition <- relevel(factor(sample_metadata$condition), ref = "control")
 
 # Check if meta data is correct
 sample_metadata
 ```
+## subset for time points (45&200) and treatment (control)
+```{r}
+# Subset metadata for time point 200
+sample_metadata_control_45_200 <- sample_metadata[
+  (sample_metadata$time_point == "200" | sample_metadata$time_point == "45") & 
+  sample_metadata$condition == "control", 
+]
+
+# Check the subsetted metadata
+print(sample_metadata_control_45_200)
+
+# Subset count matrix for time point 200
+count_matrix_control_45_200 <- filtered_count_matrix[, colnames(count_matrix) %in% rownames(sample_metadata_control_45_200)]
+
+# Check dimensions of the subsetted count matrix
+cat("Subsetted count matrix dimensions:", dim(count_matrix_control_45_200), "\n")
+
+```
+
+
 ## Results
 Create matrix with the count matrix and the meta data. We care about both condition and time point.
 ```{r}
 # Create DESeq2 dataset
-dds <- DESeqDataSetFromMatrix(countData = filtered_count_matrix,
-                              colData = sample_metadata,
-                              design = ~ condition + time_point)
-dds$condition <- relevel(dds$condition, ref = "control")
+dds <- DESeqDataSetFromMatrix(countData = count_matrix_control_45_200,
+                              colData = sample_metadata_control_45_200,
+                              design = ~ time_point)
+dds$time_point <- relevel(dds$time_point, ref = "45")
 # Run DESeq2 analysis
 dds <- DESeq(dds)
 
@@ -155,7 +172,8 @@ Because of the small difference between time points I decided to only care about
 resultsNames(dds)
 
 # Extract the results for our specific comparison
-res <- results(dds, name = "condition_acetic_vs_control") %>% as.data.frame()
+# Replace "condition_treated_vs_control" with the actual result name if different
+res <- results(dds, name = "time_point_200_vs_45") %>% as.data.frame()
 
 # View the first few rows to understand the structure of the results
 head(res)
@@ -191,16 +209,6 @@ head(res_filtered_final)
 
 ```
 
-```{r}
-# remove rows that contain tRNA genes
-#res_filtered_final_notrna <-  res_filtered_final[-c(732:889), ]
-
-# re-number the rows
-#rownames(res_filtered_final_notrna) <- 1:nrow(res_filtered_final_notrna)
-
-# view the final filtered data
-#view(res_filtered_final_notrna)
-```
 
 ## Top 10 up- and downregulated genes
 Here we could check the gene id's and see whether they match with our hypothesis.
@@ -214,11 +222,11 @@ top50_genes <- res_filtered_final %>%
 top50_genes
 
 # Save top 50 genes as a tab-separated file
-write.table(top50_genes, file = "top50_genes_trimmed.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
+write.table(top50_genes, file = "top50_genes_control_45_200.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
 ```
 ```{r}
 # Select the top 10 downregulated genes (lowest log2 fold change)
-bot50_genes <- res_filtered_final%>%
+bot50_genes <- res_filtered_final %>%
   arrange(log2FoldChange) %>%
   head(n = 50)
 
@@ -226,7 +234,7 @@ bot50_genes <- res_filtered_final%>%
 bot50_genes
 
 # Save bop 50 genes as a tab-separated file
-write.table(bot50_genes, file = "bot50_genes_trimmed.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
+write.table(bot50_genes, file = "bot50_genes_control_45_200.tsv", sep = "\t", quote = FALSE, row.names = FALSE)
 
 ```
 ## Volcano plot
@@ -310,6 +318,6 @@ ggplot(labelled_dat2, aes(x = l2fc, fill = up_down)) +
 
 ## Save file as csv
 ```{r}
-write_csv(res_filtered_final, "yeast_results_trimmed.csv")
+write_csv(res_filtered_final, "yeast_results_control_45_200.csv")
 ```
 
