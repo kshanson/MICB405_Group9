@@ -67,14 +67,14 @@ geneID2GO <- cleaned_gene_to_go %>%
 
 geneID2GO <- geneID2GO %>% distinct(Gene, GO)
 # Save the collapsed file
-write.table(geneID2GO, file = "data/collapsed_geneID2GO_45.tsv", sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
+write.table(geneID2GO, file = "data/collapsed_geneID2GO.tsv", sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
 
 ```
 
 ## Load Mapping file and create character vector
 ```{r}
-geneID2GO <- readMappings("data/collapsed_geneID2GO_45.tsv")
+geneID2GO <- readMappings("data/collapsed_geneID2GO.tsv")
 
 geneUniverse <- names(geneID2GO)
 ```
@@ -82,7 +82,7 @@ geneUniverse <- names(geneID2GO)
 
 ## Load Gene Expression Data
 ```{r}
-data <- read_csv("data/yeast_results_45.csv")
+data <- read_csv("data/yeast_results_200.csv")
 ```
 
 ## Filter for statistically significant upregulated genes
@@ -218,7 +218,7 @@ up_GO_filtered <- up_GO %>%
 up_GO_filtered %>% 
   ggplot(aes(x = Term, y = GeneRatio)) +
   geom_col(width = 0.05) + 
-  geom_point(aes(size= Significant)) +
+  geom_point(size = 3) +
   coord_flip() # Flip the axes so the x-axis labels are readable
 ```
 ```{r}

@@ -36,8 +36,6 @@ setwd("~/uni/autumn-24/final_project/")
 ```
 ## Convert the mapping file
 ```{r}
-# Load necessary libraries
-library(dplyr)
 
 # Load the GAF file
 gaf_file <- "data/sgd.gaf"  # Adjust the path if needed
@@ -202,7 +200,7 @@ order_term <- down_GO_filtered_arranged %>%
 down_GO_filtered_arranged %>% 
   ggplot(aes(x= Term, y = GeneRatio, colour = weight01)) +
   geom_col(width = 0.05) +
-  geom_point(size = 3) +
+  geom_point(aes(size= Significant)) +
   coord_flip() +
   scale_x_discrete(limits = order_term) + 
   scale_colour_gradient(low = "red", high = "blue")
@@ -255,7 +253,6 @@ up_GO <- up_GO %>%
 
 down_GO <- down_GO %>% 
   mutate(up_down = "DOWN")
-
 # Make a joined dataframe
 joined_GO_filtered_arranged <- bind_rows(up_GO, down_GO) %>%
   filter(weight01 <= 0.05) %>%
@@ -267,19 +264,28 @@ joined_GO_filtered_arranged <- bind_rows(up_GO, down_GO) %>%
 # Extract the column order
 order_term_joined <- joined_GO_filtered_arranged %>% 
   pull(Term)
-
-joined_GO_filtered_arranged %>% 
-  ggplot(aes(x= Term, y = GeneRatio, color = weight01)) +
-  geom_point(aes(size= Significant)) +
+joined_GO_filtered_arranged %>%
+  ggplot(aes(x = Term, y = GeneRatio, color = weight01)) +
+  geom_point(aes(size = Significant)) +
   coord_flip() +
   scale_x_discrete(limits = order_term_joined) +
   scale_color_gradient(low = "red", high = "blue") +
   theme_light() +
-  labs(x = "GO Term Description", y = "Enrichment Ratio", color = "P-value", size = "Number of Significant Genes") +
-  theme(panel.border = element_rect(color = "black"), 
-        panel.grid = element_line(colour = "grey96"), 
-        strip.background = element_rect(colour = "black")) +
-  scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.2), expand = c(0, 0)) +
-  facet_grid(.~ up_down)
+  labs(
+    x = "GO Term Description", 
+    y = "Enrichment Ratio", 
+    color = "P-value", 
+    size = "Number of Significant Genes"
+  ) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1) # Tilt numbers with proper alignment
+  ) +
+  scale_y_continuous(
+    breaks = seq(0, 1, 0.2),  # Ensure breaks align with the data
+    limits = c(0, 1),         # Ensure the axis covers the range of the data
+    expand = c(0, 0)          # Remove padding around the plot
+  ) +
+  facet_grid(. ~ up_down)
+
 ```
 
