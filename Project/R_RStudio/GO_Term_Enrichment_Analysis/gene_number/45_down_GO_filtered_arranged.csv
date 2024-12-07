@@ -1,0 +1,21 @@
+"GO.ID","Term","Annotated","Significant","Expected","weight01","GeneRatio"
+"GO:0006164","purine nucleotide biosynthetic process",62,13,6.27,0.00373,0.209677419354839
+"GO:0055085","transmembrane transport",399,84,40.34,9e-06,0.210526315789474
+"GO:0000722","telomere maintenance via recombination",36,9,3.64,0.00805,0.25
+"GO:0030476","ascospore wall assembly",39,11,3.94,0.00123,0.282051282051282
+"GO:0006526","arginine biosynthetic process",14,6,1.42,0.00447,0.428571428571429
+"GO:0009086","methionine biosynthetic process",18,8,1.82,0.00031,0.444444444444444
+"GO:0000105","histidine biosynthetic process",9,4,0.91,0.00861,0.444444444444444
+"GO:0006144","purine nucleobase metabolic process",16,9,1.62,0.00275,0.5625
+"GO:0003333","amino acid transmembrane transport",35,22,3.54,5.1e-05,0.628571428571429
+"GO:0006730","one-carbon metabolic process",12,8,1.21,2.4e-05,0.666666666666667
+"GO:1903826","arginine transmembrane transport",6,4,0.61,0.00131,0.666666666666667
+"GO:0072488","ammonium transmembrane transport",6,4,0.61,0.00131,0.666666666666667
+"GO:0019346","transsulfuration",7,5,0.71,0.00018,0.714285714285714
+"GO:0006189","'de novo' IMP biosynthetic process",8,6,0.81,2.4e-05,0.75
+"GO:1902358","sulfate transmembrane transport",4,3,0.4,0.00381,0.75
+"GO:0019344","cysteine biosynthetic process",9,7,0.91,0.00047,0.777777777777778
+"GO:0000103","sulfate assimilation",9,7,0.91,0.00129,0.777777777777778
+"GO:0070814","hydrogen sulfide biosynthetic process",5,4,0.51,0.00103,0.8
+"GO:0000256","allantoin catabolic process",7,6,0.71,5.7e-05,0.857142857142857
+"GO:0019379","sulfate assimilation, phosphoadenylyl su...",3,3,0.3,0.00103,1

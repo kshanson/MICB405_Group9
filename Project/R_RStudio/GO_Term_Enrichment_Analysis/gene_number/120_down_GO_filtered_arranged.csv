@@ -1,0 +1,21 @@
+"GO.ID","Term","Annotated","Significant","Expected","weight01","GeneRatio"
+"GO:0000470","maturation of LSU-rRNA",56,8,4.99,0.00123,0.142857142857143
+"GO:0000462","maturation of SSU-rRNA from tricistronic...",82,14,7.31,0.00079,0.170731707317073
+"GO:0055085","transmembrane transport",399,71,35.55,9.7e-06,0.177944862155388
+"GO:0030476","ascospore wall assembly",39,9,3.48,0.00618,0.230769230769231
+"GO:0002181","cytoplasmic translation",142,41,12.65,3.5e-12,0.288732394366197
+"GO:0006144","purine nucleobase metabolic process",16,5,1.43,0.00545,0.3125
+"GO:0009086","methionine biosynthetic process",18,6,1.6,0.00161,0.333333333333333
+"GO:0000096","sulfur amino acid metabolic process",37,14,3.3,0.00767,0.378378378378378
+"GO:0006730","one-carbon metabolic process",12,5,1.07,0.00325,0.416666666666667
+"GO:0003333","amino acid transmembrane transport",35,16,3.12,0.00164,0.457142857142857
+"GO:1990145","maintenance of translational fidelity",7,4,0.62,0.00175,0.571428571428571
+"GO:0034354","'de novo' NAD biosynthetic process from ...",5,3,0.45,0.00614,0.6
+"GO:0031119","tRNA pseudouridine synthesis",5,3,0.45,0.00614,0.6
+"GO:0006526","arginine biosynthetic process",14,10,1.25,3.9e-06,0.714285714285714
+"GO:0019878","lysine biosynthetic process via aminoadi...",10,8,0.89,1.1e-05,0.8
+"GO:0072488","ammonium transmembrane transport",6,5,0.53,3.1e-05,0.833333333333333
+"GO:0009085","lysine biosynthetic process",12,10,1.07,0.00773,0.833333333333333
+"GO:0019379","sulfate assimilation, phosphoadenylyl su...",3,3,0.27,7e-04,1
+"GO:0042450","arginine biosynthetic process via ornith...",2,2,0.18,0.00793,1
+"GO:0098718","serine import across plasma membrane",2,2,0.18,0.00793,1

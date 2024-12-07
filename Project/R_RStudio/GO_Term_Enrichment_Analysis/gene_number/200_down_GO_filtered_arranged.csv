@@ -1,0 +1,21 @@
+"GO.ID","Term","Annotated","Significant","Expected","weight01","GeneRatio"
+"GO:0032259","methylation",69,11,6.49,0.00338,0.159420289855072
+"GO:0006364","rRNA processing",246,65,23.14,0.00537,0.264227642276423
+"GO:0006656","phosphatidylcholine biosynthetic process",19,6,1.79,0.00489,0.315789473684211
+"GO:0000470","maturation of LSU-rRNA",56,18,5.27,1.9e-05,0.321428571428571
+"GO:0000096","sulfur amino acid metabolic process",37,12,3.48,0.00863,0.324324324324324
+"GO:0006450","regulation of translational fidelity",21,7,1.98,0.00699,0.333333333333333
+"GO:0000462","maturation of SSU-rRNA from tricistronic...",82,29,7.71,3.3e-10,0.353658536585366
+"GO:0000054","ribosomal subunit export from nucleus",56,22,5.27,1.5e-09,0.392857142857143
+"GO:0003333","amino acid transmembrane transport",35,14,3.29,0.00634,0.4
+"GO:0000027","ribosomal large subunit assembly",37,15,3.48,4.4e-07,0.405405405405405
+"GO:0019878","lysine biosynthetic process via aminoadi...",10,6,0.94,0.00394,0.6
+"GO:0000028","ribosomal small subunit assembly",19,13,1.79,6.3e-10,0.684210526315789
+"GO:1990145","maintenance of translational fidelity",7,5,0.66,0.00013,0.714285714285714
+"GO:0000461","endonucleolytic cleavage to generate mat...",5,4,0.47,0.00036,0.8
+"GO:0019354","siroheme biosynthetic process",2,2,0.19,0.00883,1
+"GO:0098718","serine import across plasma membrane",2,2,0.19,0.00883,1
+"GO:0046898","response to cycloheximide",2,2,0.19,0.00883,1
+"GO:0006843","mitochondrial citrate transmembrane tran...",2,2,0.19,0.00883,1
+"GO:0010795","regulation of ubiquinone biosynthetic pr...",2,2,0.19,0.00883,1
+"GO:0035524","proline transmembrane transport",2,2,0.19,0.00883,1

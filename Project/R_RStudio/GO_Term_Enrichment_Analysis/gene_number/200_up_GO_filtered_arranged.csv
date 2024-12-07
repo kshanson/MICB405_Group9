@@ -1,0 +1,21 @@
+"GO.ID","Term","Annotated","Significant","Expected","weight01","GeneRatio"
+"GO:0006979","response to oxidative stress",99,10,6.26,0.01134,0.101010101010101
+"GO:0036503","ERAD pathway",50,9,3.16,0.00355,0.18
+"GO:0034605","cellular response to heat",50,10,3.16,0.00309,0.2
+"GO:0005978","glycogen biosynthetic process",19,5,1.2,0.00515,0.263157894736842
+"GO:0043161","proteasome-mediated ubiquitin-dependent ...",110,34,6.95,1.6e-14,0.309090909090909
+"GO:0072671","mitochondria-associated ubiquitin-depend...",12,4,0.76,0.00517,0.333333333333333
+"GO:0008645","hexose transmembrane transport",24,8,1.52,0.01074,0.333333333333333
+"GO:0006515","protein quality control for misfolded or...",25,9,1.58,2.1e-05,0.36
+"GO:0006616","SRP-dependent cotranslational protein ta...",11,4,0.7,0.00363,0.363636363636364
+"GO:0061723","glycophagy",8,3,0.51,0.01104,0.375
+"GO:0042026","protein refolding",21,8,1.33,2.3e-05,0.380952380952381
+"GO:0045899","positive regulation of RNA polymerase II...",10,4,0.63,0.00243,0.4
+"GO:0051085","chaperone cofactor-dependent protein ref...",10,4,0.63,0.00243,0.4
+"GO:0006207","'de novo' pyrimidine nucleobase biosynth...",7,3,0.44,0.00724,0.428571428571429
+"GO:0045732","positive regulation of protein catabolic...",9,4,0.57,0.01136,0.444444444444444
+"GO:0043248","proteasome assembly",29,14,1.83,0.00017,0.482758620689655
+"GO:0051131","chaperone-mediated protein complex assem...",6,3,0.38,0.00434,0.5
+"GO:0070682","proteasome regulatory particle assembly",11,7,0.7,1e-06,0.636363636363636
+"GO:0010499","proteasomal ubiquitin-independent protei...",16,11,1.01,1.8e-10,0.6875
+"GO:0015771","trehalose transport",2,2,0.13,0.00398,1
