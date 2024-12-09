@@ -1,0 +1,62 @@
+---
+title: "Panel_figure_of_up_down_GO_terms"
+author: "Indra Yavuukhulan"
+date: "2024-12-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+# Load necessary libraries
+library(gridExtra)
+library(cowplot)
+library(phyloseq)
+library(ape)
+library(tidyverse)
+library(picante)
+library(ggplot2)
+library(rbiom)
+library(ggsignif)
+```
+
+
+```{r}
+down_go_terms <- grid.arrange(
+  arrangeGrob(
+    down_go_45, 
+    down_go_120, 
+    down_go_200,
+    nrow = 1, ncol = 3), nrow = 1,
+ heights = c(10) # Adjust heights to give more space to plots unit(c(30), "cm")
+  )
+
+down_go_terms
+```
+
+```{r}
+ggsave("down_go_terms.png", down_go_terms, width = 20, height = 5)
+
+```
+
+```{r}
+up_go_terms <- grid.arrange(
+  arrangeGrob(
+    up_go_45, 
+    up_go_120, 
+    up_go_200,
+    nrow = 1, ncol = 3), nrow = 1,
+ heights = c(10) # Adjust heights to give more space to plots unit(c(30), "cm")
+  )
+
+up_go_terms
+```
+
+```{r}
+ggsave("up_go_terms.png", up_go_terms, width = 20, height = 5)
+
+```
+
