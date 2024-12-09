@@ -27,36 +27,61 @@ library(ggsignif)
 ```{r}
 down_go_terms <- grid.arrange(
   arrangeGrob(
-    down_go_45, 
-    down_go_120, 
-    down_go_200,
-    nrow = 1, ncol = 3), nrow = 1,
- heights = c(10) # Adjust heights to give more space to plots unit(c(30), "cm")
+    down_go_45 + theme(title.position = "none", plot.title = element_text(hjust = -1)) + labs(title = bquote(bold("A"))),  
+    down_go_120 + theme(title.position = "none", plot.title = element_text(hjust = -1)) + labs(title = bquote(bold("B"))),  
+    down_go_200 + theme(title.position = "none", plot.title = element_text(hjust = -1)) + labs(title = bquote(bold("C"))),  
+    nrow = 2, ncol = 2), nrow = 1,
+ heights = unit(c(30), "cm")# Adjust heights to give more space to plots unit(c(30), "cm")
   )
 
 down_go_terms
 ```
 
 ```{r}
-ggsave("down_go_terms.png", down_go_terms, width = 20, height = 5)
+ggsave("down_go_terms.png", down_go_terms, width = 15, height = 12)
 
 ```
 
 ```{r}
 up_go_terms <- grid.arrange(
   arrangeGrob(
-    up_go_45, 
-    up_go_120, 
-    up_go_200,
-    nrow = 1, ncol = 3), nrow = 1,
- heights = c(10) # Adjust heights to give more space to plots unit(c(30), "cm")
+    up_go_45 + theme(title.position = "none", plot.title = element_text(hjust = -1)) + labs(title = bquote(bold("A"))), 
+    up_go_120 + theme(title.position = "none", plot.title = element_text(hjust = -1)) + labs(title = bquote(bold("B"))),  
+    up_go_200 + theme(title.position = "none", plot.title = element_text(hjust = -1)) + labs(title = bquote(bold("C"))), 
+    nrow = 2, ncol = 2), nrow = 1,
+ heights = unit(c(30), "cm") # Adjust heights to give more space to plots unit(c(30), "cm")
   )
 
 up_go_terms
 ```
 
 ```{r}
-ggsave("up_go_terms.png", up_go_terms, width = 20, height = 5)
+ggsave("up_go_terms.png", up_go_terms, width = 15, height = 12)
 
 ```
+
+```{r}
+ GO_terms <- grid.arrange(
+  arrangeGrob(
+    up_go_45 + theme(title.position = "none", plot.title = element_text(hjust = -1.6)) + labs(title = bquote(bold("A"))), 
+    down_go_45 + theme(title.position = "none", plot.title = element_text(hjust = -1.9)) + labs(title = bquote(bold("B"))),  
+    up_go_120 + theme(title.position = "none", plot.title = element_text(hjust = -1.9)) + labs(title = bquote(bold("C"))),  
+    down_go_120 + theme(title.position = "none", plot.title = element_text(hjust = -1.9)) + labs(title = bquote(bold("D"))),  
+    up_go_200 + theme(title.position = "none", plot.title = element_text(hjust = -1.9)) + labs(title = bquote(bold("E"))), 
+     down_go_200 + theme(title.position = "none", plot.title = element_text(hjust = -1.9)) + labs(title = bquote(bold("F"))),  
+    nrow = 3, ncol = 2), nrow = 1,
+ heights = unit(c(30), "cm") # Adjust heights to give more space to plots unit(c(30), "cm")
+  )
+
+GO_terms
+ 
+
+```
+
+```{r}
+ggsave("GO_terms.png", GO_terms, width = 13, height = 12)
+
+```
+
+
 
