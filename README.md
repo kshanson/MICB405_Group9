@@ -1,5 +1,8 @@
 # MICB405_Group9
-UBC Bioinformatics Group Project 9 - Differential Gene Expression of S. Cerevisiae
+
+UBC Bioinformatics Final Project Group 9 - Differential Gene Expression of S. Cerevisiae under Acetic Acid Stress
+Authors: Kayla Hanson, Indra Yavuukhulan, Hans Carlo von Vegesack, Christine Ma
+2024 Winter Term 1
 
 Investigation into the differential gene expression of Saccharomyces cerevisiae under severe acetic acid stress. The data for analysis was obtained from SRA accession PRJNA322384, which was uploaded as part of the study by Dong et. al. in 2017 (cited below). 
 
