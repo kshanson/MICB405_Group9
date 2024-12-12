@@ -1,7 +1,7 @@
 ---
 title: "GO term enrichment analysis"
-author: "ans Carlo von Vegesack"
-date: "2024-11-19"
+author: "Hans Carlo von Vegesack, Indra Yavuukhulan"
+date: "2024-11-19, updated 2024-12-09"
 output: html_document
 ---
 
